@@ -1,0 +1,47 @@
+<idea-plugin>
+  <id>baidu-translation-plugin</id>
+  <name>baidu-translation-plugin</name>
+  <version>1.0</version>
+  <vendor email="stephen.linicoding@gmail.com" url="http://www.zuicoding.com">醉 ● coding</vendor>
+
+  <description><![CDATA[
+      可以直接在idea上打开翻译，不用另起网页搜索
+    ]]></description>
+
+  <change-notes><![CDATA[
+      可以直接在idea上打开翻译，不用另起网页搜索
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <applicationConfigurable displayName="百度翻译配置"
+                             instance="com.zuicoding.framework.translation.configuration.TranslationConfigration"/>
+    <applicationService
+            serviceInterface="com.zuicoding.framework.translation.ui.TranslationSettingsComponent"
+            serviceImplementation="com.zuicoding.framework.translation.ui.TranslationSettingsComponent"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+    <action id="baidu-translation-plugin" class="com.zuicoding.framework.translation.TranslationAction" text="百度翻译"
+            description="百度翻译">
+      <add-to-group group-id="ToolsMenu" anchor="first"/>
+    </action>
+      <action id="right-client-call-translation"
+              class="com.zuicoding.framework.translation.RightClickCallTranslationAction" text="百度翻译"
+              description="右键调用百度翻译">
+          <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      </action>
+  </actions>
+
+</idea-plugin>
