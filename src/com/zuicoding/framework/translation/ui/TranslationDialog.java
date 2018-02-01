@@ -64,23 +64,18 @@ public class TranslationDialog extends DialogWrapper {
 
     }
 
-    @NotNull
+
+
     @Override
-    protected Action[] createActions() {
-        Action[] actions = super.createActions();
-
-        actions[0] = new DialogWrapperAction("翻译") {
-
-            @Override
-            protected void doAction(ActionEvent actionEvent) {
-                translation();
-
-            }
-        };
-        return actions;
+    protected void doOKAction() {
+        translation();
     }
 
-    public void translation(){
+    public void doOkClick(){
+        this.doOKAction();
+    }
+
+    private void translation(){
         HttpPost post = new HttpPost(apiField.getText());
 
         int r = random.nextInt();
@@ -105,9 +100,15 @@ public class TranslationDialog extends DialogWrapper {
         if (result == null) return;
         JSONObject jo = JSON.parseObject(result);
         JSONArray trans_result = jo.getJSONArray("trans_result");
-        jo = trans_result.getJSONObject(0);
-        String dst = jo.getString("dst");
-        toArea.setText(dst);
+        StringBuilder builder = new StringBuilder("");
+        for (int i = 0,len = trans_result.size(); i < len; i++) {
+            JSONObject o = trans_result.getJSONObject(i);
+            builder.append(o.getString("dst"));
+            if (i != (len - 1 )) {
+                builder.append("\n");
+            }
+        }
+        toArea.setText(builder.toString());
     }
 
     @Nullable
@@ -140,4 +141,5 @@ public class TranslationDialog extends DialogWrapper {
         this.toBobox.setModel(new LangModel(langs));
         this.toBobox.setSelectedIndex(0);
     }
+
 }

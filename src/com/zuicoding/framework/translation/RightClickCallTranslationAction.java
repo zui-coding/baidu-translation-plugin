@@ -42,7 +42,8 @@ public class RightClickCallTranslationAction extends AnAction {
             dialog.refreshToBox(list);
         }
 
+        dialog.doOkClick();
         dialog.show();
-        dialog.translation();
+
     }
 }
