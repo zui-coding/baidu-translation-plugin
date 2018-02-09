@@ -1,13 +1,21 @@
 package com.zuicoding.framework.translation.ui;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
 import javax.swing.Action;
 import javax.swing.ComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -40,6 +48,7 @@ public class TranslationDialog extends DialogWrapper {
     private JComboBox toBobox;
     private JTextField appIdField;
     private JTextField keyField;
+    private JLabel toggle;
     final Random random = new Random();
     public TranslationDialog(){
         super(false);
@@ -60,7 +69,28 @@ public class TranslationDialog extends DialogWrapper {
         toBobox.setModel(model2);
         toBobox.setRenderer(renderer);
         toBobox.setSelectedIndex(0);
+        try {
+            Toolkit tk = Toolkit.getDefaultToolkit();
+            Image image = tk.createImage(TranslationDialog.class.getClassLoader().getResource("l-r.png"));
+            Icon icon = new ImageIcon(image);
 
+            toggle.setIcon(icon);
+        }catch (Exception e){
+            e.printStackTrace();
+            toggle.setText("<->");
+        }
+
+        toggle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                LangItem fromItem = (LangItem) fromBobox.getSelectedItem();
+                LangItem toItem = (LangItem)toBobox.getSelectedItem();
+                toBobox.setSelectedItem(fromItem);
+                toBobox.updateUI();
+                fromBobox.setSelectedItem(toItem);
+                fromBobox.updateUI();
+            }
+        });
 
     }
 

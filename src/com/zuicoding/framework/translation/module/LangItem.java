@@ -56,8 +56,7 @@ public class LangItem implements Serializable {
             return false;
         }
         LangItem item = (LangItem) o;
-        return Objects.equals(code, item.code) &&
-                Objects.equals(name, item.name);
+        return Objects.equals(code, item.code);
     }
 
     @Override
